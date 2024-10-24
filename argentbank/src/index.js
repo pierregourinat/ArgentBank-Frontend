@@ -4,6 +4,7 @@ import "./index.css";
 import "./styles/Nav.css";
 import "./styles/Banner.css";
 import "./styles/Footer.css";
+import "./styles/BankAccount.css";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./routes/Home";
