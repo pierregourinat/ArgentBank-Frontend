@@ -14,11 +14,11 @@ h1 {
   background-color: #fff;
   width: 80%;
   margin: 0 auto;
+  margin-top: 15px;
   padding: 1.5rem;
   box-sizing: border-box;
   text-align: left;
   margin-bottom: 2rem;
-  margin-top: 1rem;
 }
 
 .account-amount {
@@ -43,9 +43,14 @@ h1 {
   flex: 1;
 }
 
+.account-content-wrapper.cta {
+  width: 100%;
+  flex: 0;
+}
+
 .transaction-button {
   display: block;
-  width: 50%;
+  width: 100%;
   padding: 8px;
   font-size: 1.1rem;
   font-weight: bold;

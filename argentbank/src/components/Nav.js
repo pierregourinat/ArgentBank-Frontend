@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 
 function Nav() {
   return (
@@ -14,7 +16,7 @@ function Nav() {
       </Link>
       <div>
         <Link to="/signin" className="navLink">
-          <i className="fa fa-user-circle"></i>
+          <FontAwesomeIcon className="userCircle" icon={faCircleUser} />
           Sign In
         </Link>
       </div>
