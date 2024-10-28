@@ -1,8 +1,12 @@
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../features/auth/authSlice";
 import BankAccount from "../components/BankAccount";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 function User() {
+  const user = useSelector(selectCurrentUser);
+
   return (
     <>
       <Header />
@@ -11,7 +15,7 @@ function User() {
           <h1>
             Welcome back
             <br />
-            Tony Jarvis!
+            {user ? `${user.firstName} ${user.lastName}!` : "Guest"}
           </h1>
           <button className="edit-button">Edit Name</button>
         </div>

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Footer from "../components/Footer";
 import Nav from "../components/Nav";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   loginFailure,
   loginStart,
   loginSuccess,
+  selectAuthError,
+  selectIsAuthenticated,
 } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +23,17 @@ const SignIn = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const error = useSelector(selectAuthError);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
+  // Redirection si déjà authentifié
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/user");
+    }
+  }, [isAuthenticated, navigate]);
+
+  // Gestion du Remember Me
   useEffect(() => {
     const savedEmail = localStorage.getItem("rememberedEmail");
     if (savedEmail) {
@@ -57,16 +69,35 @@ const SignIn = () => {
         }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Echec de la connexion");
+        throw new Error("Échec de la connexion");
       }
 
-      dispatch(loginSuccess(data));
+      const data = await response.json();
+      console.log("Data reçu de l'api", data);
+
+      // Gestion du Remember Me
+      if (rememberMe) {
+        localStorage.setItem("rememberedEmail", formData.email);
+      }
+
+      // Mise à jour du state avec les données utilisateur
+      dispatch(
+        loginSuccess({
+          firstName: data.body.firstName,
+          lastName: data.body.lastName,
+          email: data.body.email,
+          id: data.body.id,
+        })
+      );
+
+      // dispatch(loginSuccess(data.body)); // Si les données utilisateur sont dans data.body
+      // setFormData({ email: "", password: "" });
+
+      // Reset du formulaire
       setFormData({ email: "", password: "" });
 
+      // Navigation vers la page user
       navigate("/user");
     } catch (error) {
       dispatch(loginFailure(error.message));
@@ -123,6 +154,7 @@ const SignIn = () => {
               Sign In
             </button>
           </form>
+          {error && <div className="errorMessage">{error}</div>}
         </section>
       </main>
       <Footer />
