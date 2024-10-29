@@ -10,8 +10,7 @@ import {
   selectIsAuthenticated,
 } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
-
-const API_URL = "http://localhost:3001/api/v1/user/login";
+import { loginUser, getUserProfile } from "../services/authService";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -58,22 +57,7 @@ const SignIn = () => {
     dispatch(loginStart());
 
     try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Échec de la connexion");
-      }
-
-      const data = await response.json();
+      const data = await loginUser(formData.email, formData.password);
       console.log("Data reçu de l'api", data);
 
       // Gestion du Remember Me
@@ -85,23 +69,7 @@ const SignIn = () => {
       const token = data.body.token;
 
       // Faire une requête supplémentaire pour obtenir les informations de l'utilisateur
-      const userResponse = await fetch(
-        "http://localhost:3001/api/v1/user/profile",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!userResponse.ok) {
-        throw new Error(
-          "Échec de la récupération des informations de l'utilisateur"
-        );
-      }
-
-      const userData = await userResponse.json();
+      const userData = await getUserProfile(token);
       console.log("Données utilisateur complètes", userData);
 
       // Mise à jour du state avec les données utilisateur
