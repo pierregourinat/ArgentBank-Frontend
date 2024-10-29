@@ -81,18 +81,38 @@ const SignIn = () => {
         localStorage.setItem("rememberedEmail", formData.email);
       }
 
+      // Obtenir le token de la réponse
+      const token = data.body.token;
+
+      // Faire une requête supplémentaire pour obtenir les informations de l'utilisateur
+      const userResponse = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!userResponse.ok) {
+        throw new Error(
+          "Échec de la récupération des informations de l'utilisateur"
+        );
+      }
+
+      const userData = await userResponse.json();
+      console.log("Données utilisateur complètes", userData);
+
       // Mise à jour du state avec les données utilisateur
       dispatch(
         loginSuccess({
-          firstName: data.body.firstName,
-          lastName: data.body.lastName,
-          email: data.body.email,
-          id: data.body.id,
+          firstName: userData.body.firstName,
+          lastName: userData.body.lastName,
+          email: userData.body.email,
+          id: userData.body.id,
         })
       );
-
-      // dispatch(loginSuccess(data.body)); // Si les données utilisateur sont dans data.body
-      // setFormData({ email: "", password: "" });
 
       // Reset du formulaire
       setFormData({ email: "", password: "" });
