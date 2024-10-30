@@ -57,35 +57,33 @@ const SignIn = () => {
     dispatch(loginStart());
 
     try {
-      const data = await loginUser(formData.email, formData.password);
-      console.log("Data reçu de l'api", data);
+      // Login et récupération du token
+      const loginResponse = await loginUser(formData.email, formData.password);
+      const token = loginResponse.body.token;
+
+      // Récupération du profil utilisateur avec le token
+      const userResponse = await getUserProfile(token);
+
+      // Dispatch des informations
+      dispatch(
+        loginSuccess({
+          user: {
+            firstName: userResponse.body.firstName,
+            lastName: userResponse.body.lastName,
+            email: userResponse.body.email,
+            id: userResponse.body.id,
+          },
+          token: token, // Ajout du token dans le payload
+        })
+      );
 
       // Gestion du Remember Me
       if (rememberMe) {
         localStorage.setItem("rememberedEmail", formData.email);
       }
 
-      // Obtenir le token de la réponse
-      const token = data.body.token;
-
-      // Faire une requête supplémentaire pour obtenir les informations de l'utilisateur
-      const userData = await getUserProfile(token);
-      console.log("Données utilisateur complètes", userData);
-
-      // Mise à jour du state avec les données utilisateur
-      dispatch(
-        loginSuccess({
-          firstName: userData.body.firstName,
-          lastName: userData.body.lastName,
-          email: userData.body.email,
-          id: userData.body.id,
-        })
-      );
-
-      // Reset du formulaire
+      // Reset du formulaire et navigation
       setFormData({ email: "", password: "" });
-
-      // Navigation vers la page user
       navigate("/user");
     } catch (error) {
       dispatch(loginFailure(error.message));
