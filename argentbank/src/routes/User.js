@@ -1,11 +1,29 @@
 import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import {
+  selectCurrentUser,
+  selectIsAuthenticated,
+} from "../features/auth/authSlice";
 import BankAccount from "../components/BankAccount";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { useEffect } from "react";
 
 function User() {
   const user = useSelector(selectCurrentUser);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirection vers la page de connexion si non authentifié
+    if (!isAuthenticated) {
+      navigate("/signin");
+    }
+  }, [isAuthenticated, navigate]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <>

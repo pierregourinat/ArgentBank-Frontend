@@ -8,6 +8,7 @@ import {
   loginSuccess,
   selectAuthError,
   selectIsAuthenticated,
+  initializeAuth,
 } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { loginUser, getUserProfile } from "../services/authService";
@@ -25,24 +26,16 @@ const SignIn = () => {
   const error = useSelector(selectAuthError);
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
+  useEffect(() => {
+    dispatch(initializeAuth());
+  }, [dispatch]);
+
   // Redirection si déjà authentifié
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/user");
     }
   }, [isAuthenticated, navigate]);
-
-  // Gestion du Remember Me
-  useEffect(() => {
-    const savedEmail = localStorage.getItem("rememberedEmail");
-    if (savedEmail) {
-      setFormData((prev) => ({
-        ...prev,
-        email: savedEmail,
-      }));
-      setRememberMe(true);
-    }
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

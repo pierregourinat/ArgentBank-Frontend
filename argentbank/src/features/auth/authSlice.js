@@ -20,6 +20,10 @@ const authSlice = createSlice({
       state.token = token;
       state.error = null;
       state.isAuthenticated = true;
+
+      // Stocker le token et l'utilisateur dans le localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
     },
     loginFailure: (state, action) => {
       state.error = action.payload;
@@ -32,12 +36,29 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
 
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    },
+    // Utilisation du reducer initializeAuth pour initialiser l'authentification
+    initializeAuth: (state) => {
+      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+
+      if (token && user) {
+        state.token = token;
+        state.user = JSON.parse(user);
+        state.isAuthenticated = true;
+      }
     },
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout } =
-  authSlice.actions;
+export const {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+  logout,
+  initializeAuth,
+} = authSlice.actions;
 
 // Sélecteurs pour faciliter l'accès aux états
 export const selectCurrentUser = (state) => state.auth.user;
