@@ -34,7 +34,7 @@ export const getUserProfile = async (token) => {
   return response.json();
 };
 
-// Vérification du token
+// Vérification de la validité du token
 export const verifyToken = async (token) => {
   try {
     const response = await fetch(API_PROFILE, {

@@ -26,6 +26,7 @@ const SignIn = () => {
   const error = useSelector(selectAuthError);
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
+  //  Initialisation de la connexion
   useEffect(() => {
     dispatch(initializeAuth());
   }, [dispatch]);
