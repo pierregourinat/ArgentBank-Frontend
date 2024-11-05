@@ -49,6 +49,14 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
       }
     },
+    // Formulaire d'édition du username
+    updateUserSuccess: (state, action) => {
+      state.user = { ...state.user, ...action.payload };
+      localStorage.setItem("user", JSON.stringify(state.user));
+    },
+    updateUserFailure: (state, action) => {
+      state.error = action.payload;
+    },
   },
 });
 
@@ -58,6 +66,8 @@ export const {
   loginFailure,
   logout,
   initializeAuth,
+  updateUserSuccess,
+  updateUserFailure,
 } = authSlice.actions;
 
 // Sélecteurs pour faciliter l'accès aux états

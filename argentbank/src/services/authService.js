@@ -34,19 +34,37 @@ export const getUserProfile = async (token) => {
   return response.json();
 };
 
-// Vérification de la validité du token
-export const verifyToken = async (token) => {
-  try {
-    const response = await fetch(API_PROFILE, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+// Fonction pour le formulaire d'édition du nom d'utilisateur
+export const updateUserProfile = async (token, userData) => {
+  const response = await fetch(API_PROFILE, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(userData),
+  });
 
-    return response.ok;
-  } catch (error) {
-    console.error("Token verification failed", error);
-    return false;
+  if (!response.ok) {
+    throw new Error("Echec de la mise à jour de votre nom d'utilisateur");
   }
+
+  return response.json();
 };
+
+// // Vérification de la validité du token
+// export const verifyToken = async (token) => {
+//   try {
+//     const response = await fetch(API_PROFILE, {
+//       method: "GET",
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+
+//     return response.ok;
+//   } catch (error) {
+//     console.error("Token verification failed", error);
+//     return false;
+//   }
+// };
