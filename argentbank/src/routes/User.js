@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 
 function User() {
   const [isEditing, setIsEditing] = useState(false);
-  const [firstName, setFirstName] = useState("");
+  const [userName, setUserName] = useState("");
   const [error, setError] = useState(null);
 
   const user = useSelector(selectCurrentUser);
@@ -29,7 +29,7 @@ function User() {
     setError(null);
 
     try {
-      const response = await updateUserProfile(token, { firstName });
+      const response = await updateUserProfile(token, { userName });
       dispatch(updateUserSuccess(response.body));
       setIsEditing(false);
     } catch (error) {
@@ -39,10 +39,10 @@ function User() {
   };
 
   const handleEdit = () => {
-    setFirstName(user.firstName);
+    setUserName(user.userName);
     setIsEditing(true);
 
-    console.log(user.firstName);
+    console.log(user.userName || user.firstName);
   };
 
   useEffect(() => {
@@ -73,13 +73,14 @@ function User() {
           ) : (
             <form onSubmit={handleSubmit} className="edit-form">
               <div className="input-group">
-                <label htmlFor="firstName">Username:</label>
+                <label htmlFor="username">Username:</label>
                 <input
                   type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="First Name"
-                  required
+                  id="username"
+                  name="username"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  placeholder="Edit username"
                 />
               </div>
               {error && <p className="error-message">{error}</p>}
