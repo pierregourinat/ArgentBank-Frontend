@@ -51,20 +51,3 @@ export const updateUserProfile = async (token, userData) => {
 
   return response.json();
 };
-
-// // Vérification de la validité du token
-// export const verifyToken = async (token) => {
-//   try {
-//     const response = await fetch(API_PROFILE, {
-//       method: "GET",
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-
-//     return response.ok;
-//   } catch (error) {
-//     console.error("Token verification failed", error);
-//     return false;
-//   }
-// };

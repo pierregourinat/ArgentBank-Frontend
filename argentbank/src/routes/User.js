@@ -8,10 +8,10 @@ import {
   updateUserFailure,
 } from "../features/auth/authSlice";
 import { updateUserProfile } from "../services/authService";
-import BankAccount from "../components/BankAccount";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
+import BankAccounts from "../components/BankAccount";
 
 function User() {
   const [isEditing, setIsEditing] = useState(false);
@@ -79,7 +79,6 @@ function User() {
                   name="username"
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
-                  placeholder="Edit username"
                   className="edit-input"
                 />
               </div>
@@ -100,9 +99,7 @@ function User() {
           )}
         </div>
         <h2 className="sr-only">Accounts</h2>
-        <BankAccount />
-        <BankAccount />
-        <BankAccount />
+        <BankAccounts />
       </main>
       <Footer />
     </>

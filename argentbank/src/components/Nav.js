@@ -40,7 +40,7 @@ function Nav() {
             <div className="logWrapper">
               <FontAwesomeIcon className="userCircle" icon={faCircleUser} />
               <Link to="/user" className="navLink">
-                {user.userName || user.firstName}
+                {user.userName}
               </Link>
             </div>
             <div className="logWrapper">

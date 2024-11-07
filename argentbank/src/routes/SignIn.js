@@ -64,6 +64,7 @@ const SignIn = () => {
           user: {
             firstName: userResponse.body.firstName,
             lastName: userResponse.body.lastName,
+            userName: userResponse.body.userName,
             email: userResponse.body.email,
             id: userResponse.body.id,
           },
