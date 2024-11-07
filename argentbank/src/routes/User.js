@@ -73,7 +73,6 @@ function User() {
           ) : (
             <form onSubmit={handleSubmit} className="edit-form">
               <div className="input-group">
-                <label htmlFor="username">Username:</label>
                 <input
                   type="text"
                   id="username"
