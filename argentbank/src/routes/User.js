@@ -81,6 +81,7 @@ function User() {
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                   placeholder="Edit username"
+                  className="edit-input"
                 />
               </div>
               {error && <p className="error-message">{error}</p>}
