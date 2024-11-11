@@ -42,6 +42,9 @@ code {
 .feature-item {
   flex: 1;
   padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .features {
@@ -138,4 +141,17 @@ code {
 .edit-input {
   padding: 5px;
   font-size: 1.2rem;
+}
+
+/* RESPONSIVE MOBILE */
+
+@media (max-width: 475px) {
+  .features {
+    flex-direction: column;
+  }
+
+  .account {
+    padding: 1rem;
+    flex-direction: column;
+  }
 }
