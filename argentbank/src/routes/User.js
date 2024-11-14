@@ -64,7 +64,7 @@ function User() {
           <h1>
             Welcome back
             <br />
-            {user ? `${user.firstName} ${user.lastName}!` : "Guest"}
+            {user ? `${user.userName}!` : "Guest"}
           </h1>
           {!isEditing ? (
             <button className="edit-button" onClick={handleEdit}>
