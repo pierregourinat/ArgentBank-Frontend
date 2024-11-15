@@ -69,6 +69,10 @@ code {
   height: 100%;
 }
 
+.formTitle {
+  color: black;
+}
+
 .sign-in-content {
   box-sizing: border-box;
   background-color: white;
@@ -76,6 +80,7 @@ code {
   margin: 0 auto;
   margin-top: 3rem;
   padding: 2rem;
+  margin-bottom: 400px;
 }
 
 .sign-in-icon {
