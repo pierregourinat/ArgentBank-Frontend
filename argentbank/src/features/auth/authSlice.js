@@ -38,7 +38,7 @@ const authSlice = createSlice({
       localStorage.removeItem("token");
       localStorage.removeItem("user");
     },
-    // Utilisation du reducer initializeAuth pour initialiser l'authentification
+    // Utilisation du reducer initializeAuth pour restaurer la session si elle existe
     initializeAuth: (state) => {
       const token = localStorage.getItem("token");
       const user = localStorage.getItem("user");

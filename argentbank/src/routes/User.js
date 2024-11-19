@@ -41,8 +41,6 @@ function User() {
   const handleEdit = () => {
     setUserName(user.userName);
     setIsEditing(true);
-
-    console.log(user.userName || user.firstName);
   };
 
   useEffect(() => {
